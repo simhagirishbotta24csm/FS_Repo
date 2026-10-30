@@ -1,5 +1,6 @@
-# murmur
+# Full Stack Development Lab - Submission Repositary
 
+# Group Project (Blog website)
 A miniature Twitter / community-forum clone built with the MERN stack (MongoDB, Express, React, Node).
 People post short text updates with an optional image, like and comment (with nested replies), and follow each other to shape their feed.
 
