@@ -79,41 +79,23 @@ murmur/
 | `Follow` | follower → following | One document per edge, unique `{follower, following}`; indexed both directions |
 | `Like` | user, targetType (`Post`/`Comment`), target | Unique `{user, targetType, target}` makes liking idempotent and race-safe |
 
-## API
+# Assignments
+Assignment-1 is submitted for Static Web page using html, css and javascript.
 
-All routes are under `/api`. `🔒` = requires `Authorization: Bearer <token>`. List endpoints take `?limit=` and `?cursor=` and return `{ items, nextCursor }`.
+# Assignment-2 (Individual Project - Taak Manager)
+Task manager map is a simple end-to-end react project to Manage and Track Tasks or Activities read more in README.md.
 
-| Method | Route | Description |
-| --- | --- | --- |
-| POST | `/auth/register` · `/auth/login` | Returns `{ token, user }` |
-| GET 🔒 | `/auth/me` | Current user |
-| GET | `/users/search?q=` | Prefix search on username / display name |
-| GET 🔒 | `/users/suggestions` | Who to follow (mutual follows first) |
-| PATCH 🔒 | `/users/me` | Update name, bio, avatar (multipart) |
-| GET | `/users/:username` | Profile with `isFollowing`, `followsYou` |
-| POST / DELETE 🔒 | `/users/:username/follow` | Follow / unfollow |
-| GET | `/users/:username/followers` · `/following` · `/posts` | Paginated lists |
-| POST 🔒 | `/posts` | Create post (multipart: `text`, `image`) |
-| GET 🔒 | `/posts/feed` · `/posts/feed/new?after=<id>` | Home feed; count of newer posts |
-| GET | `/posts/explore` | Global timeline |
-| GET / DELETE 🔒 | `/posts/:id` | Read / delete own post (also removes comments, likes, image) |
-| POST 🔒 | `/posts/:id/like` | Toggle like → `{ liked, likesCount }` |
-| GET / POST 🔒 | `/posts/:id/comments` | Flat thread list / add comment (`{ text, parent? }`) |
-| DELETE 🔒 | `/comments/:id` | Delete comment and its replies |
-| POST 🔒 | `/comments/:id/like` | Toggle like |
+# Observation
+Submitted 1-9 experiments in pdf.
 
-## Design decisions worth knowing
+# E-record
+Submitted e-record pdf from codetantra.
 
-- **Cursor pagination on `_id`**, not skip/limit, so feeds stay stable while new posts arrive and deep pages stay fast.
-- **Fan-out on read** for the feed (`author $in [follows]`). Simple and right for this scale; at large scale you would
-  precompute timelines.
-- **Counters are only changed when a `Like`/`Follow` document is actually created or deleted**, so they cannot drift when
-  requests race.
-- **Uploads** are stored on local disk (`server/uploads`) with random filenames and an extension derived from the verified MIME type.
-  For a real deployment, swap `middleware/upload.js` for S3 / Cloudinary.
-- The JWT lives in `localStorage` for simplicity. For a production app, prefer an httpOnly cookie with CSRF protection.
+# Group Project Members
+ P.Daswanth - A24126552270
+ J.Mahesh - A24126552271
+ B.Simha Girish - A24126552272
+ P.Chetan - A24126552273
+ I.Kanishk - A24126552274
 
-## Ideas to extend
 
-Notifications (Socket.IO), reposts, hashtag pages, private accounts, email verification, image resizing with `sharp`,
-automated tests with `mongodb-memory-server` + `supertest`.
